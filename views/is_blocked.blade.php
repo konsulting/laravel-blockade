@@ -48,6 +48,7 @@
             font-size: 24pt;
             padding-left: 10px;
             padding-right: 10px;
+            color: #B0BEC5;
         }
 
         .btn {
@@ -72,7 +73,7 @@
         @if (config('blockade.show_form'))
             <form action="" method="GET">
                 <p><strong>To enter the site, please provide a valid code.</strong></p>
-                <input type="text" class="form-control" name="{{ config('blockade.key') }}" value="">
+                <input type="password" class="form-control" name="{{ config('blockade.key') }}" value="">
                 <button type="submit" class="btn">Enter</button>
             </form>
         @endif

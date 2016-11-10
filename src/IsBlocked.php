@@ -34,14 +34,15 @@ class IsBlocked
             return $next($request);
         }
 
-        if ($request->has($this->key)) {
+        if ($request->exists($this->key)) {
             $this->session->put($this->key, $request->input($this->key));
+
+            return redirect($this->urlWithKeyStripped($request));
         }
 
         if ($this->session->get($this->key, false) !== $this->code) {
             return response(view('blockade::is_blocked'), 200);
         }
-        $this->session->put($this->key, $this->code);
 
         return $next($request);
     }
@@ -59,5 +60,12 @@ class IsBlocked
         }
 
         return false;
+    }
+
+    protected function urlWithKeyStripped($request)
+    {
+        $query = $request->except($this->key);
+
+        return $request->path() . ($query ? '?' . http_build_query($query) : '');
     }
 }
