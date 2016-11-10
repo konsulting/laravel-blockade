@@ -1,6 +1,6 @@
 # Blockade
 
-#### A simple block for your Laravel app to prevent access without a known code, and to force to https if you wish.
+*A simple block for your [Laravel](https://laravel.com) app to prevent access without a known code, and to force to https if you wish.*
 
 ## Installation
 
