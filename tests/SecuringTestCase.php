@@ -5,7 +5,7 @@ namespace Konsulting\Laravel\Blockade;
 use Route;
 use Schema;
 
-abstract class SecuringTestCase extends \Orchestra\Testbench\TestCase
+abstract class SecuringTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 {
     /**
      * Set up ServiceProviders

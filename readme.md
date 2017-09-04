@@ -1,12 +1,13 @@
 # Blockade
 
-*A simple block for your [Laravel](https://laravel.com) app to prevent access without a known code, and to force to https if you wish.*
+* A simple block for your [Laravel](https://laravel.com) app to prevent access without a known code, and to force to https if you wish.*
 
 ## Installation
 
 * Install Blockade using composer: `composer require konsulting/laravel-blockade`
 
-* Add Blockade's Service Provider to `config/app.php`
+* If you are using Laravel 5.5, the package will make the serivce provider available for auto-discovery.
+If you are using an earlier version of Laravel, add Blockade's Service Provider to `config/app.php`
 
 ```php
 'providers' => [
@@ -14,7 +15,7 @@
 
     Konsulting\Laravel\Blockade\BlockadeServiceProvider::class,
 ],
-	
+
 ```
 
 * Add the middleware to your `app/Http/Kernel.php`
@@ -57,7 +58,7 @@ If you find any security issues, or have any concerns, please email [keoghan@kle
 
 ## Contributing
 
-Contributions are welcome and will be fully credited. We will accept contributions by Pull Request. 
+Contributions are welcome and will be fully credited. We will accept contributions by Pull Request.
 
 Please:
 
@@ -66,6 +67,6 @@ Please:
 * Document changes in behaviour, including readme.md.
 
 ## Testing
-We use [PHPUnit](https://phpunit.de) and the excellent [orchestral/testbench](https://github.com/orchestral/testbench) 
+We use [PHPUnit](https://phpunit.de) and the excellent [orchestral/testbench](https://github.com/orchestral/testbench)
 
 Run tests using PHPUnit: `vendor/bin/phpunit`
