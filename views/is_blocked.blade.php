@@ -89,11 +89,15 @@
             <form action="" method="GET">
                 <p><strong>To enter the site, please provide a valid code.</strong></p>
                 <input title="Blockade Password" type="password" class="form-control"
-                       name="{{ config('blockade.key') }}" value="">
+                       name="{{ config('blockade.key') }}" value="" id="blockade-password">
                 <button type="submit" class="btn">Enter</button>
             </form>
         @endif
     </div>
 </div>
+
+<script>
+    document.getElementById("blockade-password").focus();
+</script>
 </body>
 </html>
