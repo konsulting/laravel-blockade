@@ -3,7 +3,7 @@
 <head>
     <title>Under Development.</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300" rel="stylesheet" type="text/css">
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -17,7 +17,7 @@
             padding: 0;
             width: 100%;
             color: #B0BEC5;
-            font-weight: 100;
+            font-weight: 300;
             font-family: 'Lato', sans-serif;
         }
 
@@ -36,6 +36,7 @@
 
         .title {
             font-size: 3.5rem;
+            font-weight: 100;
             margin-bottom: 40px;
         }
 
