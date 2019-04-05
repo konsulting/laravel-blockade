@@ -32,6 +32,13 @@ class IsBlocked
      */
     protected $exclude;
 
+    /**
+     * Whether we should be checking against a single code, or a comma-delimited list.
+     *
+     * @var bool
+     */
+    protected $allowMultipleCodes;
+
     public function __construct(SessionStore $session)
     {
         $this->session = $session;
@@ -39,6 +46,7 @@ class IsBlocked
         $this->key = config('blockade.key', 'dev');
         $this->code = config('blockade.code', false);
         $this->exclude = config('blockade.not_blocked', []);
+        $this->allowMultipleCodes = config('blockade.multiple_codes', false);
     }
 
     /**
@@ -108,9 +116,14 @@ class IsBlocked
      */
     protected function codeIsValid()
     {
-        $referenceCodes = array_map('trim', explode(',', $this->code));
         $codeToCheck = $this->session->get($this->key, false);
 
-        return in_array($codeToCheck, $referenceCodes, true);
+        if ($this->allowMultipleCodes) {
+            $referenceCodes = array_map('trim', explode(',', $this->code));
+
+            return in_array($codeToCheck, $referenceCodes, true);
+        }
+
+        return $codeToCheck === $this->code;
     }
 }
