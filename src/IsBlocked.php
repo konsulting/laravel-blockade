@@ -3,29 +3,57 @@
 namespace Konsulting\Laravel\Blockade;
 
 use Closure;
-use Illuminate\Session\Store;
+use Illuminate\Http\Request;
+use Illuminate\Session\Store as SessionStore;
 
 class IsBlocked
 {
+    /** @var SessionStore */
     protected $session;
+
+    /**
+     * The blockade pass code.
+     *
+     * @var string
+     */
     protected $code;
+
+    /**
+     * The URL parameter through which the blockade code may be supplied.
+     *
+     * @var string
+     */
     protected $key;
+
+    /**
+     * The list of URLs to exclude from the block.
+     *
+     * @var string[]
+     */
     protected $exclude;
 
-    public function __construct(Store $session)
+    /**
+     * Whether we should be checking against a single code, or a comma-delimited list.
+     *
+     * @var bool
+     */
+    protected $allowMultipleCodes;
+
+    public function __construct(SessionStore $session)
     {
         $this->session = $session;
 
         $this->key = config('blockade.key', 'dev');
         $this->code = config('blockade.code', false);
         $this->exclude = config('blockade.not_blocked', []);
+        $this->allowMultipleCodes = config('blockade.multiple_codes', false);
     }
 
     /**
-     * Handle an incoming request.
+     * Check if we should proceed to the route, or display the blocked view.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -40,13 +68,19 @@ class IsBlocked
             return redirect($this->urlWithKeyStripped($request));
         }
 
-        if ($this->session->get($this->key, false) !== $this->code) {
+        if (! $this->codeIsValid()) {
             return response(view('blockade::is_blocked'), 200);
         }
 
         return $next($request);
     }
 
+    /**
+     * Check if the current route is excluded from the block.
+     *
+     * @param Request $request
+     * @return bool
+     */
     protected function isExcludedFromBlock($request)
     {
         if ($this->code == false) {
@@ -62,10 +96,34 @@ class IsBlocked
         return false;
     }
 
+    /**
+     * Get the current URL with the blockade key parameter removed.
+     *
+     * @param Request $request
+     * @return string
+     */
     protected function urlWithKeyStripped($request)
     {
         $query = $request->except($this->key);
 
         return $request->path() . ($query ? '?' . http_build_query($query) : '');
+    }
+
+    /**
+     * Check if the supplied code is valid.
+     *
+     * @return bool
+     */
+    protected function codeIsValid()
+    {
+        $codeToCheck = $this->session->get($this->key, false);
+
+        if ($this->allowMultipleCodes) {
+            $referenceCodes = array_map('trim', explode(',', $this->code));
+
+            return in_array($codeToCheck, $referenceCodes, true);
+        }
+
+        return $codeToCheck === $this->code;
     }
 }

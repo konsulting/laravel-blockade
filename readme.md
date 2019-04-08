@@ -1,12 +1,12 @@
 # Blockade
 
-* A simple block for your [Laravel](https://laravel.com) app to prevent access without a known code, and to force to https if you wish.*
+A simple block for your [Laravel](https://laravel.com) app to prevent access without a known code, and to force to https if you wish.*
 
 ## Installation
 
 * Install Blockade using composer: `composer require konsulting/laravel-blockade`
 
-* If you are using Laravel 5.5, the package will make the serivce provider available for auto-discovery.
+* If you are using Laravel 5.5, the package will make the service provider available for auto-discovery.
 If you are using an earlier version of Laravel, add Blockade's Service Provider to `config/app.php`
 
 ```php
@@ -40,11 +40,13 @@ _Only add the middleware you want to use._
 
 ## Configuration Options
 
-There is a small set of configuration options.
+There is a small set of configuration options. See the `blockade.php` config file for more information.
 
 **key** - the variable name for the 'unlock code' to be used when checking is the site is blocked.
 
 **code** - the code that allows access, it can be set using the environment variable `BLOCKADE_CODE` in the `.env` file
+
+**multiple_codes** - whether or not to allow multiple codes to be used (specified as a comma-delimited list). Defaults to `false`
 
 **show_form** - should Blockade show a form for the user to enter the code? defaults to `false`
 
