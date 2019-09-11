@@ -6,7 +6,7 @@ A simple block for your [Laravel](https://laravel.com) app to prevent access wit
 
 * Install Blockade using composer: `composer require konsulting/laravel-blockade`
 
-* If you are using Laravel 5.5, the package will make the service provider available for auto-discovery.
+* If you are using Laravel 5.5 or above, the package will make the service provider available for auto-discovery.
 If you are using an earlier version of Laravel, add Blockade's Service Provider to `config/app.php`
 
 ```php
