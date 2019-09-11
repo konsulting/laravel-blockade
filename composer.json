@@ -6,16 +6,19 @@
         {
             "name": "Keoghan Litchfield",
             "email": "keoghan@klever.co.uk"
+        },
+        {
+            "name": "Robin D'Arcy",
+            "email": "robin@klever.co.uk"
         }
     ],
     "require": {
         "php": "^5.6 | ^7.0",
-        "laravel/framework": "^5.3"
+        "laravel/framework": "^5.3 | ^6.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5",
-        "orchestra/testbench": "~3.8",
-        "orchestra/testbench-browser-kit": "~3.1"
+        "phpunit/phpunit": "^8.0",
+        "orchestra/testbench-browser-kit": "^4.0"
     },
     "autoload": {
         "psr-4": {
