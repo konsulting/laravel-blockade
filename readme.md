@@ -33,10 +33,14 @@ protected $middlewareGroups = [
 _Only add the middleware you want to use._
 
 * Publish configuration and adjust for your site
-`php artisan vendor:publish --provider=Konsulting\Laravel\Blockade\BlockadeServiceProvider --tag=config`
+```
+php artisan vendor:publish --provider=Konsulting\\Laravel\\Blockade\\BlockadeServiceProvider --tag=config
+```
 
 * Optionally publish views and adjust for your site
-`php artisan vendor:publish --provider=Konsulting\Laravel\Blockade\BlockadeServiceProvider --tag=views`
+```
+php artisan vendor:publish --provider=Konsulting\\Laravel\\Blockade\\BlockadeServiceProvider --tag=views
+```
 
 ## Configuration Options
 
