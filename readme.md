@@ -54,6 +54,8 @@ There is a small set of configuration options. See the `blockade.php` config fil
 
 **show_form** - should Blockade show a form for the user to enter the code? defaults to `false`
 
+**redirect** - optional url to redirect the user to when blocked
+
 **not_blocked** - an array of url patterns that should not be blocked
 
 **not_secure** - an array of url patterns that should not be forced to https
