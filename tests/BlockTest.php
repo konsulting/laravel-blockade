@@ -14,7 +14,7 @@ class BlockTest extends BlockingTestCase
     {
         config()->set('blockade.redirect', 'https://www.klever.co.uk');
 
-        $this->visitRoute('home')
+        $this->get(route('home'))
             ->assertRedirectedTo('https://www.klever.co.uk');
     }
 
