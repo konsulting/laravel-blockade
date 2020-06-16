@@ -33,6 +33,13 @@ class IsBlocked
     protected $exclude;
 
     /**
+     * The url to redirect a user to when blocked, optional
+     *
+     * @var string
+     */
+    protected $redirect;
+
+    /**
      * Whether we should be checking against a single code, or a comma-delimited list.
      *
      * @var bool
@@ -46,6 +53,7 @@ class IsBlocked
         $this->key = config('blockade.key', 'dev');
         $this->code = config('blockade.code', false);
         $this->exclude = config('blockade.not_blocked', []);
+        $this->redirect = config('blockade.redirect', null);
         $this->allowMultipleCodes = config('blockade.multiple_codes', false);
     }
 
@@ -68,11 +76,15 @@ class IsBlocked
             return redirect($this->urlWithKeyStripped($request));
         }
 
-        if (! $this->codeIsValid()) {
-            return response(view('blockade::is_blocked'), 200);
+        if ($this->codeIsValid()) {
+            return $next($request);
         }
 
-        return $next($request);
+        if ($this->shouldRedirectWhenBlocked()) {
+            return redirect()->away($this->redirect);
+        }
+
+        return response(view('blockade::is_blocked'), 200);
     }
 
     /**
@@ -125,5 +137,15 @@ class IsBlocked
         }
 
         return $codeToCheck === $this->code;
+    }
+
+    /**
+     * Has a redirect been provided for use when blocked?
+     *
+     * @return bool
+     */
+    protected function shouldRedirectWhenBlocked()
+    {
+        return null !== $this->redirect;
     }
 }

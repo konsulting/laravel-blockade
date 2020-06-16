@@ -51,6 +51,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Redirect when blocked
+    |--------------------------------------------------------------------------
+    |
+    | Providing this will redirect the visitor to a different page/site when
+    | they have not provided the blockade code in the url.
+    |
+    */
+    'redirect' => env('BLOCKADE_REDIRECT', null),
+
+    /*
+    |--------------------------------------------------------------------------
     | Not-blocked list
     |--------------------------------------------------------------------------
     |
