@@ -10,6 +10,14 @@ class BlockTest extends BlockingTestCase
             ->dontSee('Home');
     }
 
+    public function test_it_redirects_when_set()
+    {
+        config()->set('blockade.redirect', 'https://www.klever.co.uk');
+
+        $this->get(route('home'))
+            ->assertRedirectedTo('https://www.klever.co.uk');
+    }
+
     public function test_it_doesnt_block_home_with_the_right_code()
     {
         $this->visitRoute('home', ['dev' => 'abc'])
