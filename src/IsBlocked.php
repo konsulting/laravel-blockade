@@ -3,6 +3,7 @@
 namespace Konsulting\Laravel\Blockade;
 
 use Closure;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store as SessionStore;
 
@@ -46,6 +47,13 @@ class IsBlocked
      */
     protected $allowMultipleCodes;
 
+    /**
+     * The expiry date for the blockade
+     *
+     * @var Carbon|null
+     */
+    protected $until;
+
     public function __construct(SessionStore $session)
     {
         $this->session = $session;
@@ -54,6 +62,7 @@ class IsBlocked
         $this->code = config('blockade.code', false);
         $this->exclude = config('blockade.not_blocked', []);
         $this->redirect = config('blockade.redirect', null);
+        $this->until = config('blockade.until', null) ? Carbon::parse(config('blockade.until')) : null;
         $this->allowMultipleCodes = config('blockade.multiple_codes', false);
     }
 
@@ -67,6 +76,10 @@ class IsBlocked
     public function handle($request, Closure $next)
     {
         if ($this->isExcludedFromBlock($request)) {
+            return $next($request);
+        }
+
+        if ($this->blockHasExpired()) {
             return $next($request);
         }
 
@@ -147,5 +160,17 @@ class IsBlocked
     protected function shouldRedirectWhenBlocked()
     {
         return null !== $this->redirect;
+    }
+
+    /**
+     * Check if the block has expired
+     */
+    protected function blockHasExpired()
+    {
+        if (! $this->until) {
+            return false;
+        }
+
+        return $this->until->isPast();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Konsulting\Laravel\Blockade;
 
+use Illuminate\Support\Carbon;
+
 class BlockTest extends BlockingTestCase
 {
     public function test_it_blocks_access_to_home()
@@ -28,6 +30,19 @@ class BlockTest extends BlockingTestCase
     {
         $this->visitRoute('not-blocked')
             ->see('Not Blocked');
+    }
+
+    public function test_it_blocks_until_a_specified_time()
+    {
+        config()->set('blockade.until', Carbon::now()->addHour());
+
+        $this->visitRoute('home')
+            ->dontSee('Home');
+
+        Carbon::setTestNow(now()->addHours(2));
+
+        $this->visitRoute('home')
+            ->see('Home');
     }
 
     /** @dataProvider passwordProvider */

@@ -62,6 +62,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Redirect when blocked
+    |--------------------------------------------------------------------------
+    |
+    | Providing this will redirect the visitor following any other rules until
+    | this time has passed.  Date must be parsable by the date() function.
+    |
+    */
+    'until' => env('BLOCKADE_UNTIL', null),
+
+    /*
+    |--------------------------------------------------------------------------
     | Not-blocked list
     |--------------------------------------------------------------------------
     |
