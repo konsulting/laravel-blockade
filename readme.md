@@ -56,6 +56,8 @@ There is a small set of configuration options. See the `blockade.php` config fil
 
 **redirect** - optional url to redirect the user to when blocked
 
+**until** - optional datetime for the blockade to expire
+
 **not_blocked** - an array of url patterns that should not be blocked
 
 **not_secure** - an array of url patterns that should not be forced to https
