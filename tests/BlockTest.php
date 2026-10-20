@@ -56,7 +56,7 @@ class BlockTest extends BlockingTestCase
         $this->$method('Home');
     }
 
-    public function passwordProvider()
+    public static function passwordProvider()
     {
         return [
             ['pass1', true],
