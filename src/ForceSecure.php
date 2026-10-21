@@ -23,7 +23,10 @@ class ForceSecure
     public function handle($request, Closure $next)
     {
         if (! $request->secure() && $this->shouldBeSecured($request)) {
-            return redirect()->secure($request->getRequestUri());
+            // A request for "//evil.com/" would otherwise redirect off-site to "//evil.com/".
+            $path = preg_replace('#^/+#', '/', $request->getRequestUri());
+
+            return redirect()->secure($path);
         }
 
         return $next($request);
